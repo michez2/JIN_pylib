@@ -19,10 +19,10 @@ class read_Treble():
     
     def get_data(self,bgtime,edtime,tz):
         with h5py.File(self.filename,'r') as fp:
-            timestamps = fp['deformation/gps_time'][:].astype(int)
+            timestamps = fp['deformation/gps_time'][:]
 
             # added .astype(int)
-            ind = (timestamps>=bgtime.timestamp())&(timestamps<edtime.timestamp())
+            ind = (timestamps>=bgtime.timestamp()).astype(int)&(timestamps<edtime.timestamp()).astype(int)
             data = fp['deformation/data'][ind,:]
             dx = fp['deformation/data'].attrs['dx']
             timestamps = timestamps[ind]
